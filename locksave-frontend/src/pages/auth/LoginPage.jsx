@@ -1,42 +1,65 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import toast from 'react-hot-toast'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { z } from 'zod'
+import AuthLayout from '../../components/layout/AuthLayout'
+import Input from '../../components/ui/Input'
+import Button from '../../components/ui/Button'
+import Notice from '../../components/ui/Notice'
 import { useAuth } from '../../auth/useAuth'
+import { emailField } from '../../utils/validators'
 
-const field = 'w-full rounded-lg border border-cream-300 bg-cream-100 p-2'
+const schema = z.object({ email: emailField, password: z.string().min(1, 'Enter your password') })
+const link = 'font-medium text-fir-700 underline-offset-4 hover:underline'
 
 export default function LoginPage() {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const [form, setForm] = useState({ email: '', password: '' })
-  const [busy, setBusy] = useState(false)
+  const [serverError, setServerError] = useState('')
+  const { register, handleSubmit, getValues, formState: { errors, isSubmitting } } = useForm({
+    resolver: zodResolver(schema),
+    defaultValues: { email: location.state?.email ?? '', password: '' },
+  })
 
-  async function onSubmit(e) {
-    e.preventDefault()
-    setBusy(true)
+  const notice = location.state?.verified ? 'Email verified. Log in to continue.'
+    : location.state?.reset ? 'Password updated. Log in with your new password.' : ''
+
+  async function onSubmit(values) {
+    setServerError('')
     try {
-      await login(form)
+      await login(values)
       navigate(location.state?.from?.pathname ?? '/dashboard', { replace: true })
     } catch (err) {
-      toast.error(err.message)
-    } finally {
-      setBusy(false)
+      if (err.status === 403 || /not verified/i.test(err.message)) {
+        navigate('/verify-otp', { state: { email: values.email } })
+      } else {
+        setServerError(err.message)
+      }
     }
   }
 
   return (
-    <main className="grid min-h-screen place-items-center">
-      <form onSubmit={onSubmit} className="w-80 space-y-3 rounded-2xl bg-cream-50 p-6 shadow">
-        <h1 className="text-2xl">LockSave</h1>
-        <input className={field} type="email" placeholder="Email" value={form.email}
-               onChange={(e) => setForm({ ...form, email: e.target.value })} />
-        <input className={field} type="password" placeholder="Password" value={form.password}
-               onChange={(e) => setForm({ ...form, password: e.target.value })} />
-        <button disabled={busy} className="w-full rounded-lg bg-fir-700 p-2 text-cream-100 disabled:opacity-60">
-          {busy ? 'Signing in…' : 'Log in'}
-        </button>
+    <AuthLayout
+      title="Welcome back"
+      subtitle="Log in to see your vaults."
+      footer={<>New to LockSave? <Link to="/register" className={link}>Create an account</Link></>}
+    >
+      <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
+        {notice && <Notice type="success">{notice}</Notice>}
+        {serverError && <Notice>{serverError}</Notice>}
+        <Input label="Email" type="email" autoComplete="email" error={errors.email?.message} {...register('email')} />
+        <Input label="Password" type="password" autoComplete="current-password" error={errors.password?.message} {...register('password')} />
+        <div className="text-right text-sm">
+          <Link to="/forgot-password" className={link}>Forgot password?</Link>
+        </div>
+        <Button type="submit" loading={isSubmitting} className="w-full">Log in</Button>
+        <p className="text-center text-sm text-muted">
+          Signed up but never verified?{' '}
+          <Link to="/verify-otp" state={{ email: getValues('email') }} className={link}>Enter your code</Link>
+        </p>
       </form>
-    </main>
+    </AuthLayout>
   )
 }
