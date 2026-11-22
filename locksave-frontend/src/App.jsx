@@ -19,7 +19,11 @@ export default function App() {
         <Route path="/reset-password" element={<ResetPasswordPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
+          <Route element={<AppLayout />}>
+    <Route path="/dashboard" element={<DashboardPage />} />
+    <Route path="/vaults" element={<VaultsPage />} />
+    <Route path="/notifications" element={<NotificationsPage />} />
+    <Route path="/profile" element={<ProfilePage />} />
       </Route>
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
       <Route path="*" element={<div className="p-8">Page not found</div>} />
