@@ -1,9 +1,10 @@
 import toast from 'react-hot-toast'
 import { api } from '../api/client'
 import { useAuth } from '../auth/useAuth'
+import PageHeader from '../components/layout/PageHeader'
 
 export default function DashboardPage() {
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
 
   async function testCall() {
     try {
@@ -15,12 +16,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <main className="space-y-4 p-8">
-      <h1 className="text-3xl">Muraho, {user?.fullName ?? user?.email}</h1>
-      <div className="flex gap-3">
-        <button onClick={testCall} className="rounded-lg bg-fir-700 px-4 py-2 text-cream-100">Test protected call</button>
-        <button onClick={logout} className="rounded-lg border border-cream-300 px-4 py-2">Log out</button>
-      </div>
-    </main>
+    <>
+      <PageHeader title={`Muraho, ${user?.fullName?.split(' ')[0] ?? ''}`} subtitle="Your dashboard arrives in step 8." />
+      <button onClick={testCall} className="rounded-xl bg-fir-700 px-4 py-2.5 text-cream-100">Test protected call</button>
+    </>
   )
 }
