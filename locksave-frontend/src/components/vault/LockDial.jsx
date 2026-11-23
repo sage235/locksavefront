@@ -1,6 +1,6 @@
 const RAD = Math.PI / 180
 
-export default function LockDial({ ticks = 120, done = 73, value = '47', caption = 'days until it opens', size = 300, className = '' }) {
+export default function LockDial({ ticks = 120, done = 73, value = '47', caption = 'days until it opens', size = 300, valueSize = 62, className = '' }) {
   const c = 150, R = 118
   const deg = (i) => -90 + (i * 360) / ticks
   const pt = (d, r) => [c + r * Math.cos(d * RAD), c + r * Math.sin(d * RAD)]
