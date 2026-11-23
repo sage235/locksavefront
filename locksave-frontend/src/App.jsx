@@ -17,6 +17,9 @@ export default function App() {
         <Route path="/verify-otp" element={<VerifyOtpPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
         <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/vaults" element={<VaultsPage />} />
+<Route path="/vaults/new" element={<CreateVaultPage />} />
+<Route path="/vaults/:id" element={<VaultDetailPage />} />
       </Route>
       <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
