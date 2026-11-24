@@ -11,7 +11,7 @@ import './index.css'
 import { queryClient } from './lib/queryClient'
 import { AuthProvider } from './auth/AuthContext'
 import App from './App'
-import ErrorBoundary from './components/ErrorBoundary
+import ErrorBoundary from './components/ErrorBoundary'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
