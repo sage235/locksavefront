@@ -63,6 +63,7 @@ export default function VaultDetailPage() {
       toast.error(err.message)
     }
   }
+  const [money, setMoney] = useState(null) // null | 'deposit' | 'withdraw'
 
   return (
     <>
