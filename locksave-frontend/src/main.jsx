@@ -24,4 +24,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       </BrowserRouter>
     </QueryClientProvider>
   </React.StrictMode>,
+  <React.StrictMode>
+  <ErrorBoundary fullScreen>
+    <QueryClientProvider client={queryClient}>
+      {/* ...unchanged... */}
+    </QueryClientProvider>
+  </ErrorBoundary>
+</React.StrictMode>
 )
