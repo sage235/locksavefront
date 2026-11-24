@@ -25,4 +25,9 @@ export function lockElapsedRatio(createdAt, unlockDate) {
   const end = new Date(`${unlockDate}T00:00:00`).getTime()
   if (!(end > start)) return 1
   return Math.min(1, Math.max(0, (Date.now() - start) / (end - start)))
+
+  export const formatDateTime = (d) =>
+  new Intl.DateTimeFormat('en-GB', {
+    day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
+  }).format(new Date(d))
 }
