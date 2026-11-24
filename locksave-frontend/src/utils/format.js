@@ -30,4 +30,10 @@ export function lockElapsedRatio(createdAt, unlockDate) {
   new Intl.DateTimeFormat('en-GB', {
     day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
   }).format(new Date(d))
+
+  export const timeAgo = (d) => formatDistanceToNow(new Date(d), { addSuffix: true })
+
+// Backend messages are written as emails ("Hello Jean, ... The LockSave Team"). Trim for in-app display.
+export const cleanMessage = (m = '') =>
+  m.replace(/^Hello [^,\n]*,\s*/i, '').replace(/\s*The LockSave Team\s*$/i, '').trim()
 }
