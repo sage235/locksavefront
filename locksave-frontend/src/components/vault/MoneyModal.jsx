@@ -15,6 +15,8 @@ import { formatRWF } from '../../utils/format'
 import { phoneField } from '../../utils/validators'
 import uuid from '../../utils/format'
 
+const [idempotencyKey] = useState(() => uuid())
+
 const QUICK_AMOUNTS = ['10000', '50000', '100000']
 
 function MoneyForm({ kind, vault, onSubmitted }) {
