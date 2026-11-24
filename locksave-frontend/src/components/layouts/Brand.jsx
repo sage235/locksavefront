@@ -1,11 +1,10 @@
-import { Lock } from 'lucide-react'
+import logo from '../../assets/logo.svg'
+import logoLight from '../../assets/logo-light.svg'
 
-export default function Brand({ className = '' }) {
+export default function Brand({ dark = false, className = '' }) {
   return (
     <div className={`flex items-center gap-3 ${className}`}>
-      <span className="grid size-9 place-items-center rounded-full bg-fir-700 text-cream-100">
-        <Lock className="size-4" aria-hidden />
-      </span>
+      <img src={dark ? logoLight : logo} alt="" width="36" height="36" className="size-9" />
       <span className="font-display text-xl font-semibold">LockSave</span>
     </div>
   )
