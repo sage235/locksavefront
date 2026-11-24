@@ -2,6 +2,8 @@ import { Lock } from 'lucide-react'
 import LockDial from '../vault/LockDial'
 import { useEffect } from 'react'
 
+useEffect(() => { document.title = `${title} | LockSave` }, [title])
+
 function Logo({ dark = false }) {
   return (
     <div className="flex items-center gap-3">
