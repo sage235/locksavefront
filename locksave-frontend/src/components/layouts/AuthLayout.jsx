@@ -1,5 +1,6 @@
 import { Lock } from 'lucide-react'
 import LockDial from '../vault/LockDial'
+import { useEffect } from 'react'
 
 function Logo({ dark = false }) {
   return (
