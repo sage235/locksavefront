@@ -14,6 +14,8 @@ import { useAuth } from '../auth/useAuth'
 import { useVaults } from '../hooks/useVaults'
 import { useRecentActivity } from '../hooks/useRecentActivity'
 import { formatDate, formatRWF } from '../utils/format'
+import { lazy, Suspense, useMemo } from 'react'
+const SavingsChart = lazy(() => import('../components/charts/SavingsChart'))
 
 const Stat = ({ label, children }) => (
   <div className="px-5 py-4">
