@@ -55,4 +55,8 @@ export default function SavingsChart({ vaults }) {
       </ul>
     </div>
   )
+
+  <Suspense fallback={<Skeleton className="h-48" />}>
+  <SavingsChart vaults={live} />
+</Suspense>
 }
