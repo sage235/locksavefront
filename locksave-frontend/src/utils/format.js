@@ -36,4 +36,10 @@ export function lockElapsedRatio(createdAt, unlockDate) {
 // Backend messages are written as emails ("Hello Jean, ... The LockSave Team"). Trim for in-app display.
 export const cleanMessage = (m = '') =>
   m.replace(/^Hello [^,\n]*,\s*/i, '').replace(/\s*The LockSave Team\s*$/i, '').trim()
+
+// crypto.randomUUID is unavailable on insecure origins; getRandomValues is not.
+export const uuid = () =>
+  crypto.randomUUID?.() ??
+  '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
+    (Number(c) ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (Number(c) / 4)))).toString(16))
 }
