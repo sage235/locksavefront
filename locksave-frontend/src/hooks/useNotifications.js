@@ -1,5 +1,5 @@
-import { useQuery } from '@tanstack/react-query'
-import { getNotifications } from '../api/notifications.api'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { getNotifications, markAllRead, markRead } from '../api/notifications.api'
 
 export function useUnreadCount() {
   const { data } = useQuery({
@@ -10,3 +10,23 @@ export function useUnreadCount() {
   })
   return data ?? 0
 }
+
+export function useNotificationList(page = 0, size = 15) {
+  return useQuery({
+    queryKey: ['notifications', 'list', page],
+    queryFn: () => getNotifications(page, size),
+    select: (res) => res.data,
+    placeholderData: keepPreviousData,
+  })
+}
+
+function useNotificationMutation(fn) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: fn,
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['notifications'] }), // also refreshes the sidebar badge
+  })
+}
+
+export const useMarkRead = () => useNotificationMutation(markRead)
+export const useMarkAllRead = () => useNotificationMutation(markAllRead)
