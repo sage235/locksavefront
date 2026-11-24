@@ -32,12 +32,11 @@ export default function LoginPage() {
       await login(values)
       navigate(location.state?.from?.pathname ?? '/dashboard', { replace: true })
     } catch (err) {
-      if (err.status === 403 || /not verified/i.test(err.message)) {
-        navigate('/verify-otp', { state: { email: values.email } })
-      } else {
-        setServerError(err.message)
-      }
-    }
+     if (/not verified/i.test(err.message)) {
+  navigate('/verify-otp', { state: { email: values.email } })
+} else {
+  setServerError(err.message)
+}
   }
 
   return (
