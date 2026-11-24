@@ -11,6 +11,8 @@ import ErrorState from '../components/ui/ErrorState'
 import Skeleton from '../components/ui/Skeleton'
 import { useCloseVault, useVault } from '../hooks/useVaults'
 import { formatDate, formatRWF } from '../utils/format'
+import MoneyModal from '../components/vault/MoneyModal'
+import TransactionList from '../components/transactions/TransactionList'
 
 const Row = ({ label, children }) => (
   <div className="flex items-center justify-between gap-4 py-3.5">
