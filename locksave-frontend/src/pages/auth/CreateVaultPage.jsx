@@ -5,12 +5,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, Lock } from 'lucide-react'
 import toast from 'react-hot-toast'
 import { z } from 'zod'
-import PageHeader from '../components/layout/PageHeader'
-import Input from '../components/ui/Input'
-import Button from '../components/ui/Button'
-import Notice from '../components/ui/Notice'
-import { useCreateVault } from '../hooks/useVaults'
-import { addMonthsISO, todayISO } from '../utils/format'
+import PageHeader from '../../components/layouts/PageHeader'
+import Input from '../../components/ui/Input'
+import Button from '../../components/ui/Button'
+import Notice from '../../components/ui/Notice'
+import { useCreateVault } from '../../hooks/useVaults'
+import { addMonthsISO, todayISO } from '../../utils/format'
 
 const schema = z.object({
   title: z.string().trim().min(2, 'Give your vault a name').max(100, 'Keep the name under 100 characters'),

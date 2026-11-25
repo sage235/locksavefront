@@ -1,3 +1,5 @@
+import { formatDistanceToNow } from 'date-fns'
+
 export const formatRWF = (n) =>
   `Rwf ${new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(Number(n) || 0)}`
 
@@ -25,13 +27,14 @@ export function lockElapsedRatio(createdAt, unlockDate) {
   const end = new Date(`${unlockDate}T00:00:00`).getTime()
   if (!(end > start)) return 1
   return Math.min(1, Math.max(0, (Date.now() - start) / (end - start)))
+}
 
-  export const formatDateTime = (d) =>
+export const formatDateTime = (d) =>
   new Intl.DateTimeFormat('en-GB', {
     day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit',
   }).format(new Date(d))
 
-  export const timeAgo = (d) => formatDistanceToNow(new Date(d), { addSuffix: true })
+export const timeAgo = (d) => formatDistanceToNow(new Date(d), { addSuffix: true })
 
 // Backend messages are written as emails ("Hello Jean, ... The LockSave Team"). Trim for in-app display.
 export const cleanMessage = (m = '') =>
@@ -42,4 +45,3 @@ export const uuid = () =>
   crypto.randomUUID?.() ??
   '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) =>
     (Number(c) ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (Number(c) / 4)))).toString(16))
-}

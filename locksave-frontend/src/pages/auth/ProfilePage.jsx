@@ -1,13 +1,10 @@
-import PageHeader from '../components/layout/PageHeader'
-export default function ProfilePage() {
-  return <PageHeader title="Profile" subtitle="Coming in step 9." />
-}import PageHeader from '../components/layout/PageHeader'
-import ProfileForm from '../components/profile/ProfileForm'
-import PasswordForm from '../components/profile/PasswordForm'
-import DeactivateSection from '../components/profile/DeactivateSection'
-import Button from '../components/ui/Button'
-import { useAuth } from '../auth/useAuth'
-import { initials } from '../utils/format'
+import PageHeader from '../../components/layouts/PageHeader'
+import ProfileForm from '../../components/profile/ProfileForm'
+import PasswordForm from '../../components/profile/PasswordForm'
+import DeactivateSection from '../../components/profile/DeactivateSection'
+import Button from '../../components/ui/Button'
+import { useAuth } from '../../auth/useAuth'
+import { initials } from '../../utils/format'
 
 const Section = ({ title, children }) => (
   <section>

@@ -15,20 +15,15 @@ import ErrorBoundary from './components/ErrorBoundary'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <AuthProvider>
-          <App />
-          <Toaster position="top-right" />
-        </AuthProvider>
-      </BrowserRouter>
-    </QueryClientProvider>
-  </React.StrictMode>,
-  <React.StrictMode>
-  <ErrorBoundary fullScreen>
-    <QueryClientProvider client={queryClient}>
-      {/* ...unchanged... */}
-    </QueryClientProvider>
-  </ErrorBoundary>
-</React.StrictMode>
+    <ErrorBoundary fullScreen>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <AuthProvider>
+            <App />
+            <Toaster position="top-right" />
+          </AuthProvider>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ErrorBoundary>
+  </React.StrictMode>
 )

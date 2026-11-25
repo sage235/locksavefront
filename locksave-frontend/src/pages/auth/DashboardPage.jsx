@@ -1,21 +1,20 @@
-import { useMemo } from 'react'
+import { lazy, Suspense, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Lock, Plus } from 'lucide-react'
-import PageHeader from '../components/layout/PageHeader'
-import VaultHero from '../components/vault/VaultHero'
-import VaultRow from '../components/vault/VaultRow'
-import SavingsChart from '../components/charts/SavingsChart'
-import ActivityList from '../components/transactions/ActivityList'
-import EmptyState from '../components/ui/EmptyState'
-import ErrorState from '../components/ui/ErrorState'
-import Skeleton from '../components/ui/Skeleton'
-import { buttonClass } from '../components/ui/Button'
-import { useAuth } from '../auth/useAuth'
-import { useVaults } from '../hooks/useVaults'
-import { useRecentActivity } from '../hooks/useRecentActivity'
-import { formatDate, formatRWF } from '../utils/format'
-import { lazy, Suspense, useMemo } from 'react'
-const SavingsChart = lazy(() => import('../components/charts/SavingsChart'))
+import PageHeader from '../../components/layouts/PageHeader'
+import VaultHero from '../../components/vault/VaultHero'
+import VaultRow from '../../components/vault/VaultRow'
+import ActivityList from '../../components/transactions/ActivityList'
+import EmptyState from '../../components/ui/EmptyState'
+import ErrorState from '../../components/ui/ErrorState'
+import Skeleton from '../../components/ui/Skeleton'
+import { buttonClass } from '../../components/ui/Button'
+import { useAuth } from '../../auth/useAuth'
+import { useVaults } from '../../hooks/useVaults'
+import { useRecentActivity } from '../../hooks/useRecentActivity'
+import { formatDate, formatRWF } from '../../utils/format'
+
+const SavingsChart = lazy(() => import('../../components/charts/SavingsChart'))
 
 const Stat = ({ label, children }) => (
   <div className="px-5 py-4">
@@ -112,7 +111,9 @@ export default function DashboardPage() {
 
           <Section title="Where your savings are">
             <div className="rounded-3xl border border-cream-200 bg-cream-50 p-6">
-              <SavingsChart vaults={live} />
+              <Suspense fallback={<Skeleton className="h-48" />}>
+                <SavingsChart vaults={live} />
+              </Suspense>
             </div>
           </Section>
 

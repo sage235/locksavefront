@@ -1,8 +1,6 @@
+import { useEffect } from 'react'
 import { Lock } from 'lucide-react'
 import LockDial from '../vault/LockDial'
-import { useEffect } from 'react'
-
-useEffect(() => { document.title = `${title} | LockSave` }, [title])
 
 function Logo({ dark = false }) {
   return (
@@ -16,6 +14,8 @@ function Logo({ dark = false }) {
 }
 
 export default function AuthLayout({ title, subtitle, children, footer }) {
+  useEffect(() => { document.title = `${title} | LockSave` }, [title])
+
   return (
     <div className="grid min-h-screen lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
       <aside className="relative hidden flex-col justify-between overflow-hidden bg-linear-to-b from-fir-700 to-fir-900 p-12 text-cream-100 lg:flex">

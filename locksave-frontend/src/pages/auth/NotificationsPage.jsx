@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import { Bell, CheckCheck } from 'lucide-react'
 import toast from 'react-hot-toast'
-import PageHeader from '../components/layout/PageHeader'
-import NotificationItem from '../components/notifications/NotificationItem'
-import Button from '../components/ui/Button'
-import EmptyState from '../components/ui/EmptyState'
-import ErrorState from '../components/ui/ErrorState'
-import Skeleton from '../components/ui/Skeleton'
-import { useMarkAllRead, useMarkRead, useNotificationList } from '../hooks/useNotifications'
+import PageHeader from '../../components/layouts/PageHeader'
+import NotificationItem from '../../components/notifications/NotificationItem'
+import Button from '../../components/ui/Button'
+import EmptyState from '../../components/ui/EmptyState'
+import ErrorState from '../../components/ui/ErrorState'
+import Skeleton from '../../components/ui/Skeleton'
+import { useMarkAllRead, useMarkRead, useNotificationList } from '../../hooks/useNotifications'
 
 export default function NotificationsPage() {
   const [page, setPage] = useState(0)

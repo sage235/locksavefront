@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom'
 import { Lock, Plus } from 'lucide-react'
-import PageHeader from '../components/layout/PageHeader'
-import VaultRow from '../components/vault/VaultRow'
-import EmptyState from '../components/ui/EmptyState'
-import ErrorState from '../components/ui/ErrorState'
-import Skeleton from '../components/ui/Skeleton'
-import { buttonClass } from '../components/ui/Button'
-import { useVaults } from '../hooks/useVaults'
+import PageHeader from '../../components/layouts/PageHeader'
+import VaultRow from '../../components/vault/VaultRow'
+import EmptyState from '../../components/ui/EmptyState'
+import ErrorState from '../../components/ui/ErrorState'
+import Skeleton from '../../components/ui/Skeleton'
+import { buttonClass } from '../../components/ui/Button'
+import { useVaults } from '../../hooks/useVaults'
 
 const NewVaultLink = () => (
   <Link to="/vaults/new" className={buttonClass('primary')}><Plus className="size-4" aria-hidden />New vault</Link>

@@ -23,9 +23,8 @@ export default function LockDial({ ticks = 120, done = 73, value = '47', caption
       <line x1={ix} y1={iy} x2={ox} y2={oy} strokeWidth="4.2" strokeLinecap="round" className="stroke-tomato-400" />
       <circle cx={mx} cy={my} r="9" className="fill-tomato-500/25" />
       <circle cx={mx} cy={my} r="4.5" className="fill-tomato-400" />
-      <text x={c} y={c + 16} textAnchor="middle" className="fill-cream-100 font-display text-[62px] font-semibold">{value}</text>
+      <text x={c} y={c + 16} textAnchor="middle" className="fill-cream-100 font-display font-semibold" style={{ fontSize: valueSize }}>{value}</text>
       <text x={c} y={c + 42} textAnchor="middle" className="fill-cream-100/75 text-[13px]">{caption}</text>
-        <text x={c} y={c + 16} textAnchor="middle" className="fill-cream-100 font-display font-semibold" style={{ fontSize: valueSize }}>{value}</text>
     </svg>
   )
 }

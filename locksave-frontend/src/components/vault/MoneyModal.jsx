@@ -13,9 +13,6 @@ import { useDeposit, useRefreshMoney, useTransactionPoll, useWithdraw } from '..
 import { DEPOSIT_METHODS, PAYMENT_LABELS, POLL_TIMEOUT_MS, WITHDRAW_METHODS } from '../../utils/constants'
 import { formatRWF } from '../../utils/format'
 import { phoneField } from '../../utils/validators'
-import uuid from '../../utils/format'
-
-const [idempotencyKey] = useState(() => uuid())
 
 const QUICK_AMOUNTS = ['10000', '50000', '100000']
 

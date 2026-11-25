@@ -50,13 +50,8 @@ export function AuthProvider({ children }) {
   }, [clearSession])
 
   const value = useMemo(
-    () => ({ user, booting, isAuthenticated: !!user, login, logout, setUser }),
-    [user, booting, login, logout],
+    () => ({ user, booting, isAuthenticated: !!user, login, logout, setUser, endSession: clearSession }),
+    [user, booting, login, logout, clearSession],
   )
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-
-  const value = useMemo(
-  () => ({ user, booting, isAuthenticated: !!user, login, logout, setUser, endSession: clearSession }),
-  [user, booting, login, logout, clearSession],
-)
 }

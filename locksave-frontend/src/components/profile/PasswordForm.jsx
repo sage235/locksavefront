@@ -6,31 +6,29 @@ import { z } from 'zod'
 import Input from '../ui/Input'
 import Button from '../ui/Button'
 import Notice from '../ui/Notice'
-import { useAuth } from '../../auth/useAuth'
-import { updateMe } from '../../api/users.api'
-import { phoneField } from '../../utils/validators'
+import PasswordRules from '../auth/PasswordRules'
+import { changePassword } from '../../api/users.api'
+import { passwordField, withPasswordMatch } from '../../utils/validators'
 
-const schema = z.object({
-  fullName: z.string().trim().min(2, 'Enter your full name').max(100),
-  phoneNumber: phoneField,
-})
+const schema = withPasswordMatch(z.object({
+  currentPassword: z.string().min(1, 'Enter your current password'),
+  password: passwordField,
+  confirmPassword: z.string(),
+}))
 
-export default function ProfileForm() {
-  const { user, setUser } = useAuth()
+export default function PasswordForm() {
   const [serverError, setServerError] = useState('')
-  const { register, handleSubmit, reset, formState: { errors, isSubmitting, isDirty } } = useForm({
+  const { register, handleSubmit, reset, watch, formState: { errors, isSubmitting } } = useForm({
     resolver: zodResolver(schema),
-    defaultValues: { fullName: user.fullName ?? '', phoneNumber: user.phoneNumber ?? '' },
+    defaultValues: { currentPassword: '', password: '', confirmPassword: '' },
   })
 
-  async function onSubmit(values) {
+  async function onSubmit({ currentPassword, password }) {
     setServerError('')
     try {
-      const res = await updateMe(values)
-      const saved = { ...values, ...res.data }
-      setUser((u) => ({ ...u, ...saved })) // sidebar and greeting update immediately
-      reset({ fullName: saved.fullName, phoneNumber: saved.phoneNumber })
-      toast.success('Profile updated')
+      await changePassword({ currentPassword, newPassword: password })
+      reset()
+      toast.success('Password updated')
     } catch (err) {
       setServerError(err.message)
     }
@@ -39,10 +37,11 @@ export default function ProfileForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-4">
       {serverError && <Notice>{serverError}</Notice>}
-      <Input label="Email" value={user.email ?? ''} disabled readOnly hint="Your email can't be changed." />
-      <Input label="Full name" autoComplete="name" error={errors.fullName?.message} {...register('fullName')} />
-      <Input label="Phone number" type="tel" autoComplete="tel" error={errors.phoneNumber?.message} {...register('phoneNumber')} />
-      <Button type="submit" loading={isSubmitting} disabled={!isDirty}>Save changes</Button>
+      <Input label="Current password" type="password" autoComplete="current-password" error={errors.currentPassword?.message} {...register('currentPassword')} />
+      <Input label="New password" type="password" autoComplete="new-password" error={errors.password?.message} {...register('password')} />
+      <PasswordRules value={watch('password')} />
+      <Input label="Confirm new password" type="password" autoComplete="new-password" error={errors.confirmPassword?.message} {...register('confirmPassword')} />
+      <Button type="submit" loading={isSubmitting}>Update password</Button>
     </form>
   )
 }

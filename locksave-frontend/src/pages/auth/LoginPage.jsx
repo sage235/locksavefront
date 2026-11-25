@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { z } from 'zod'
-import AuthLayout from '../../components/layout/AuthLayout'
+import AuthLayout from '../../components/layouts/AuthLayout'
 import Input from '../../components/ui/Input'
 import Button from '../../components/ui/Button'
 import Notice from '../../components/ui/Notice'
@@ -32,11 +32,12 @@ export default function LoginPage() {
       await login(values)
       navigate(location.state?.from?.pathname ?? '/dashboard', { replace: true })
     } catch (err) {
-     if (/not verified/i.test(err.message)) {
-  navigate('/verify-otp', { state: { email: values.email } })
-} else {
-  setServerError(err.message)
-}
+      if (/not verified/i.test(err.message)) {
+        navigate('/verify-otp', { state: { email: values.email } })
+      } else {
+        setServerError(err.message)
+      }
+    }
   }
 
   return (
